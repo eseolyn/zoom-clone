@@ -1,2 +1,3 @@
-# zoom-clone
- nomadcoders-zoom clone coding
+# Zoom-clone : Noom
+
+Zoom Clone using NodeJS, WebRTC and Websockets.
