@@ -16,14 +16,28 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 // create Websocket server on top of the http server. both server share same port(3000).
 
+const sockets = [];
+
 wss.on("connection", (socket) => {
+  // socket in server.js(backend) mean connected 'browser'.
   console.log("✅ Connected to Browser");
+  sockets.push(socket);
+  socket["nickname"] = "Anon";
   socket.on("close", () => console.log("❌ Disconnected from the Browser"));
-  socket.on("message", (message) => {
-    console.log(message);
+  socket.on("message", (data, isBinary) => {
+    const dataStr = isBinary ? data : data.toString();
+    const message = JSON.parse(dataStr);
+    switch (message.type) {
+      case "new_message":
+        sockets.forEach((aSocket) =>
+          aSocket.send(`${socket.nickname}: ${message.payload}`)
+        );
+        break;
+      case "nickname":
+        socket["nickname"] = message.payload;
+        break;
+    }
   });
-  socket.send("hello Browser!");
 });
-// socket in server.js(backend) mean connected 'browser'.
 
 server.listen(3000, handleListen);
