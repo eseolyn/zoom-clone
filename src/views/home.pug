@@ -11,18 +11,19 @@ html(lang="en")
             h1 Noom
         main 
             div#welcome 
-                form 
-                    input(placeholder='Room Name', required, type='text')
+                form
+                    input#nickname(placeholder="nickname", required,type='text')
+                    input#roomName(placeholder='Room Name', required, type='text')
                     button Enter Room
             div#room
                 h3
                 ul 
-                form#name
-                    input(placeholder="nickname", required,type='text')
-                    button Save
                 form#msg
                     input(placeholder="message", required,type='text')
                     button Send
+                form#name
+                    input(placeholder="nickname", required,type='text')
+                    button Change
 
         script(src="/socket.io/socket.io.js")       
         script(src="/public/js/app.js")
