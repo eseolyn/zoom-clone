@@ -27,9 +27,10 @@ function publicRooms() {
   const publicRooms = [];
   rooms.forEach((_, key) => {
     if (sids.get(key) === undefined) {
-      publicRooms.push(key);
+      publicRooms.push({ roomName: key, userCount: countRoom(key) });
     }
   });
+  console.log(publicRooms);
   return publicRooms;
 }
 
@@ -46,7 +47,7 @@ wsServer.on("connection", (socket) => {
     socket.join(roomName);
     socket["nickname"] = nickname;
     done();
-    //the `done()` function inside 'ws' can pass the argument.
+    //the `done()` function inside 'ws' can pass the argument...?
     socket.to(roomName).emit("welcome", socket.nickname, countRoom(roomName));
     wsServer.sockets.emit("room_change", publicRooms());
   });
