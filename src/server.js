@@ -30,7 +30,6 @@ function publicRooms() {
       publicRooms.push({ roomName: key, userCount: countRoom(key) });
     }
   });
-  console.log(publicRooms);
   return publicRooms;
 }
 
